@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/VirajShah21/mcw/issues"
   },
-  "homepage": "https://github.com/VirajShah21/mcw#readme"
+  "homepage": "https://github.com/VirajShah21/mcw#readme",
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
 }
