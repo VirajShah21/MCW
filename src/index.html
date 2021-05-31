@@ -8,9 +8,13 @@
 
     <body>
         <script>
-            fetch('/modlist.json')
+            fetch('/modlist.json', {
+                headers: {
+                    'content-type': 'application/json',
+                },
+            })
                 .then((data) => {
-                    return JSON.parse(data.text());
+                    return data.json();
                 })
                 .then((mods) => {
                     for (mod in mods) {

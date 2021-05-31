@@ -38,6 +38,6 @@ export const STATICPATH = (() => {
 
 export const MODLIST_PATH = (() => {
     const mlpath = path.join(STATICPATH, 'modlist.json');
-    if (!existsSync(mlpath)) writeFileSync(mlpath, '');
+    if (!existsSync(mlpath)) writeFileSync(mlpath, '{}');
     return mlpath;
 })();
