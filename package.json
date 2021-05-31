@@ -1,24 +1,26 @@
 {
-  "name": "mcw",
-  "version": "1.0.0",
-  "description": "The Most Customizable Webpage",
-  "main": "index.js",
-  "type": "module",
-  "module": "es2020",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/VirajShah21/mcw.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/VirajShah21/mcw/issues"
-  },
-  "homepage": "https://github.com/VirajShah21/mcw#readme",
-  "devDependencies": {
-    "express": "^4.17.1"
-  }
+    "name": "mcw",
+    "version": "1.0.0",
+    "description": "The Most Customizable Webpage",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/VirajShah21/mcw.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/VirajShah21/mcw/issues"
+    },
+    "jshintOptions": {
+        "esversion": 8
+    },
+    "homepage": "https://github.com/VirajShah21/mcw#readme",
+    "devDependencies": {
+        "express": "^4.17.1"
+    }
 }

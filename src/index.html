@@ -8,13 +8,9 @@
 
     <body>
         <script>
-            fetch('/modlist.json', {
-                headers: {
-                    'content-type': 'application/json',
-                },
-            })
+            fetch('/modlist.json')
                 .then((data) => {
-                    return data.json();
+                    return JSON.parse(data.text());
                 })
                 .then((mods) => {
                     for (mod in mods) {
@@ -22,6 +18,10 @@
                         tag.src = mods[mod];
                         document.head.appendChild(tag);
                     }
+                })
+                .catch((err) => {
+                    alert(`There was an issue fetching the list of mods\n${err}`);
+                    console.error(err);
                 });
         </script>
     </body>
