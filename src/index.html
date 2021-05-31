@@ -7,6 +7,22 @@
     </head>
 
     <body>
-        <script></script>
+        <script>
+            fetch('/modlist.json', {
+                headers: {
+                    'content-type': 'application/json',
+                },
+            })
+                .then((data) => {
+                    return data.json();
+                })
+                .then((mods) => {
+                    for (mod in mods) {
+                        let tag = document.createElement('script');
+                        tag.src = mods[mod];
+                        document.head.appendChild(tag);
+                    }
+                });
+        </script>
     </body>
 </html>

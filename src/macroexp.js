@@ -1,7 +1,7 @@
 /**
  * Contains all the Macro expressions which are exported as constants
  */
-import { mkdirSync, existsSync } from 'fs';
+import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import {
@@ -34,4 +34,10 @@ export const STATICPATH = (() => {
     const spath = path.join(DATAPATH, 'static');
     if (!existsSync(spath)) mkdirSync(spath);
     return spath;
+})();
+
+export const MODLIST_PATH = (() => {
+    const mlpath = path.join(STATICPATH, 'modlist.json');
+    if (!existsSync(mlpath)) writeFileSync(mlpath, '');
+    return mlpath;
 })();
