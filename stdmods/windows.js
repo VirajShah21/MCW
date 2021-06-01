@@ -66,7 +66,7 @@ class WindowFrame {
         return frame;
     }
 
-    render() {
+    show() {
         const frame = this.makeFrame();
 
         document.body.appendChild(frame);
