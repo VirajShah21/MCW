@@ -1,5 +1,60 @@
-const WindowInstances = [];
+function ContentBlock(options = {}) {
+    const node = document.createElement('div');
+    BindBasics(node, options);
+    return node;
+}
 
+function ClickButton(options = {}) {
+    const node = document.createElement('button');
+    BindBasics(node, options);
+    return node;
+}
+
+function TextInput(options = {}) {
+    const node = document.createElement('input');
+    BindBasics(node, options);
+    node.placeholder = options.placeholder || '';
+    return node;
+}
+
+function H1Label(options = {}) {
+    const node = document.createElement('h1');
+    BindBasics(node, options);
+    return node;
+}
+
+function H2Label(options = {}) {
+    const node = document.createElement('h2');
+    BindBasics(node, options);
+    return node;
+}
+
+function TextLabel(options) {
+    const node = document.createElement('span');
+    BindBasics(node, options);
+    return node;
+}
+
+function BindBasics(node, options) {
+    if (options.id) node.id = options.id;
+    if (options.classes) node.className = options.classes.join(' ');
+    if (options.value) node.value = options.value;
+    if (options.text) node.innerText = options.text;
+    if (options.styles) for (let style in options.styles) node.style[style] = options.styles[style];
+    if (options.children)
+        options.children.forEach((child) => {
+            node.appendChild(child);
+        });
+    if (options.events) BindEvents(node, options.events);
+}
+
+function BindEvents(node, eventListeners) {
+    if (eventListeners.click) node.addEventListener('click', eventListeners.click);
+    if (eventListeners.mousedown) node.addEventListener('mousedown', eventListeners.mousedown);
+    if (eventListeners.mouseup) node.addEventListener('mouseup', eventListeners.mouseup);
+}
+
+const WindowInstances = [];
 class WindowFrame {
     constructor(
         options = {
@@ -14,7 +69,7 @@ class WindowFrame {
         this.content = options.content || null;
         this.id = options.id || Math.floor(Math.random() * 1000000);
         this.title = options.title || 'Untitled Window';
-        this.resize = options.resize.toLowerCase() || 'hv';
+        this.resize = options.resize ? options.resize.toLowerCase() : 'hv';
         this.dom = null;
         WindowInstances.push(this);
     }
@@ -64,6 +119,7 @@ class WindowFrame {
 
     makeFrame() {
         const frame = document.createElement('div');
+        this.windowContainer = document.createElement('div');
 
         frame.className = 'window-frame';
         frame.id = `window-frame-${this.id}`;
@@ -72,6 +128,7 @@ class WindowFrame {
         frame.style.height = `${this.height}px`;
 
         frame.appendChild(this.makeHandlebar());
+        frame.appendChild(this.windowContainer);
         if (this.content) frame.appendChild(this.content);
         return frame;
     }
@@ -93,7 +150,7 @@ class WindowFrame {
 
         this.dom = frame;
         document.body.appendChild(frame);
-        dragElement(frame);
+        dragWindowFrame(frame);
     }
 
     unfocus() {
@@ -126,7 +183,7 @@ class WindowFrame {
 style('/windows.css');
 
 // ! Dragability from: https://www.w3schools.com/howto/howto_js_draggable.asp
-function dragElement(elmnt) {
+function dragWindowFrame(elmnt) {
     var pos1 = 0,
         pos2 = 0,
         pos3 = 0,
