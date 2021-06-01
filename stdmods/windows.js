@@ -6,6 +6,7 @@ class WindowFrame {
             width: 300,
             height: 300,
             title: 'Untitled Window',
+            resize: 'hv',
         }
     ) {
         this.width = options.width || 300;
@@ -13,6 +14,7 @@ class WindowFrame {
         this.content = options.content || null;
         this.id = options.id || Math.floor(Math.random() * 1000000);
         this.title = options.title || 'Untitled Window';
+        this.resize = options.resize.toLowerCase() || 'hv';
         this.dom = null;
         WindowInstances.push(this);
     }
@@ -26,12 +28,20 @@ class WindowFrame {
         const minBtn = document.createElement('button');
         const maxBtn = document.createElement('button');
 
+        [exitBtn, minBtn, maxBtn].forEach((btn) => {
+            btn.className = 'handlebar-btn';
+            btn.setAttribute('data-window', `${this.id}`);
+        });
+
         exitBtn.style.background = 'rgb(255, 69, 81)';
         minBtn.style.background = 'rgb(255, 189, 0)';
         maxBtn.style.background = 'rgb(0, 213, 32)';
 
-        [exitBtn, minBtn, maxBtn].forEach((btn) => {
-            btn.className = 'handlebar-btn';
+        exitBtn.addEventListener('click', (ev) => {
+            this.exit(ev);
+        });
+        maxBtn.addEventListener('click', (ev) => {
+            this.maximize(ev);
         });
 
         wrapper.appendChild(exitBtn);
@@ -69,13 +79,20 @@ class WindowFrame {
     show() {
         const frame = this.makeFrame();
 
-        document.body.appendChild(frame);
-
         frame.addEventListener('mousedown', () => {
             this.focus();
         });
 
+        if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0) {
+            frame.style.resize = 'both';
+        } else if (this.resize == 'h') {
+            frame.style.resize = 'horizontal';
+        } else if (this.resize == 'v') {
+            frame.style.resize = 'vertical';
+        }
+
         this.dom = frame;
+        document.body.appendChild(frame);
         dragElement(frame);
     }
 
@@ -88,6 +105,20 @@ class WindowFrame {
             frame.unfocus();
         });
         this.dom.style.zIndex = '1000';
+    }
+
+    exit(event) {
+        this.dom.remove();
+        WindowInstances.splice(WindowInstances.indexOf(this), 1);
+    }
+
+    maximize(event) {
+        this.height = innerHeight;
+        this.width = innerWidth;
+        this.dom.style.width = `${this.width}px`;
+        this.dom.style.height = `${this.height}px`;
+        this.dom.style.top = '0';
+        this.dom.style.left = '0';
     }
 }
 

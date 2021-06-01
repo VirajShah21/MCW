@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .window-frame {
     position: absolute;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
@@ -6,6 +10,11 @@
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.window-frame::-webkit-resizer {
+    background-color: transparent;
 }
 
 .window-frame-handlebar {
