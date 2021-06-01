@@ -1,0 +1,34 @@
+.calculator-window {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.calculator-window .calc-btn {
+    border-radius: 28px;
+    height: 55px;
+    width: 55px;
+    margin: 5px;
+    background: rgb(51, 51, 51);
+    border: none;
+    font-size: 20px;
+    color: white;
+}
+
+.calculator-window .calc-btn.calc-func-btn {
+    background: rgb(165, 165, 165);
+    color: black;
+}
+
+.calculator-window .calc-btn.calc-op-btn {
+    background: rgb(255, 155, 0);
+}
+
+.calculator-window .calc-credits {
+    font-size: 10px;
+    color: black;
+    transition: 0.5s color;
+}
+
+.calculator-window .calc-credits:hover {
+    color: gray;
+}
