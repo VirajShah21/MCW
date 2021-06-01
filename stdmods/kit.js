@@ -102,6 +102,11 @@ function style(source) {
 }
 
 function wallpaper(source) {
+    if (!source) {
+        let curr = document.body.style.backgroundImage.replace('url(', '');
+        curr = curr.substring(0, curr.lastIndexOf(')'));
+        return curr;
+    }
     document.body.style.backgroundImage = `url(${source})`;
     document.body.style.backgroundSize = 'cover';
 }
