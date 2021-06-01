@@ -36,6 +36,7 @@ function TextLabel(options) {
 }
 
 function BindBasics(node, options) {
+    if (!options) return;
     if (options.id) node.id = options.id;
     if (options.classes) node.className = options.classes.join(' ');
     if (options.value) node.value = options.value;

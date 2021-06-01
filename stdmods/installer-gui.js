@@ -6,7 +6,7 @@ class InstallerGUI extends WindowFrame {
     constructor() {
         super({
             title: 'Installer GUI',
-            width: 400,
+            width: 700,
             height: 500,
         });
         this.oldWallpaper = wallpaper();
@@ -14,12 +14,15 @@ class InstallerGUI extends WindowFrame {
 
     show() {
         super.show();
+        this.dom.style.background = 'rgba(245, 245, 245, 0.8)';
         this.windowContainer.appendChild(
             ContentBlock({
                 styles: {
                     textAlign: 'center',
+                    color: 'rgb(50, 50, 50)',
                 },
                 children: [
+                    TextLabel(),
                     H1Label({ text: 'Package Installer' }),
                     H2Label({ text: 'Name' }),
                     TextLabel({
@@ -39,9 +42,15 @@ class InstallerGUI extends WindowFrame {
                         text: 'Enter the main script file for this package, in the format <name>/<entry>.js',
                     }),
                     TextInput({ placeholder: 'Entry File' }),
-                    ClickButton({
-                        styles: { display: 'block', float: 'center' },
-                        text: 'Install',
+                    ContentBlock({
+                        styles: {
+                            textAlign: 'center',
+                        },
+                        children: [
+                            ClickButton({
+                                text: 'Install',
+                            }),
+                        ],
                     }),
                 ],
             })
@@ -52,7 +61,7 @@ class InstallerGUI extends WindowFrame {
         super.focus();
         this.oldWallpaper = wallpaper();
         wallpaper(
-            'https://images.unsplash.com/photo-1454117096348-e4abbeba002c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+            'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
         );
     }
 
