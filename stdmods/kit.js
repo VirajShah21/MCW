@@ -91,5 +91,17 @@ function install(source, name, entry, type = 'localpath') {
 function load(source) {
     let script = document.createElement('script');
     script.src = source;
-    document.body.appendChild(script);
+    document.head.appendChild(script);
+}
+
+function style(source) {
+    let link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = source;
+    document.head.appendChild(link);
+}
+
+function wallpaper(source) {
+    document.body.style.backgroundImage = `url(${source})`;
+    document.body.style.backgroundSize = 'cover';
 }
