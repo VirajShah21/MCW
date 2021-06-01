@@ -131,12 +131,3 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-
-// @ts-ignore
-wallpaper(
-    'https://images.unsplash.com/photo-1622405632300-cebc3abedbb9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
-);
-
-for (let i = 0; i < 10; i++) {
-    new WindowFrame().render();
-}
