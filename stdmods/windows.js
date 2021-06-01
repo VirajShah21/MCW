@@ -1,11 +1,18 @@
 const WindowInstances = [];
 
 class WindowFrame {
-    constructor(content = undefined) {
-        this.width = 300;
-        this.height = 300;
-        this.content = content;
-        this.id = Math.floor(Math.random() * 1000000);
+    constructor(
+        options = {
+            width: 300,
+            height: 300,
+            title: 'Untitled Window',
+        }
+    ) {
+        this.width = options.width || 300;
+        this.height = options.height || 300;
+        this.content = options.content || null;
+        this.id = options.id || Math.floor(Math.random() * 1000000);
+        this.title = options.title || 'Untitled Window';
         this.dom = null;
         WindowInstances.push(this);
     }
@@ -84,6 +91,7 @@ class WindowFrame {
     }
 }
 
+// @ts-ignore
 style('/windows.css');
 
 // ! Dragability from: https://www.w3schools.com/howto/howto_js_draggable.asp
@@ -124,6 +132,7 @@ function dragElement(elmnt) {
     }
 }
 
+// @ts-ignore
 wallpaper(
     'https://images.unsplash.com/photo-1622405632300-cebc3abedbb9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
 );
