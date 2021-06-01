@@ -73,3 +73,8 @@ class InstallerGUI extends WindowFrame {
         }
     }
 }
+
+AppLauncher.register('Package Installer', () => {
+    const installer = new InstallerGUI();
+    installer.show();
+});
