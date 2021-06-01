@@ -43,7 +43,7 @@ class WindowFrame {
 
     makeHandlebar() {
         const handleBar = document.createElement('div');
-        handleBar.innerHTML = 'Hi';
+        handleBar.innerHTML = this.title;
         handleBar.className = 'window-frame-handlebar';
         handleBar.id = `window-frame-${this.id}-handlebar`;
 
