@@ -258,6 +258,3 @@ class Calculator extends WindowFrame {
 }
 
 style('/calculator.css');
-
-const calc = new Calculator();
-calc.show();

@@ -73,6 +73,3 @@ class InstallerGUI extends WindowFrame {
         }
     }
 }
-
-const installer = new InstallerGUI();
-installer.show();
