@@ -18,6 +18,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 
 const app = express();
 app.use(express.static(STATICPATH));
+app.use(express.static(path.join(__dirname, '../stdmods')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
