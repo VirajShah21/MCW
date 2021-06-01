@@ -269,7 +269,7 @@ class WindowPopup {
         this.dom.style.left = '0';
     }
 
-    resize(width, height) {
+    resizeTo(width, height) {
         this.width = width;
         this.height = height;
         this.dom.style.width = `${width}px`;
@@ -278,7 +278,7 @@ class WindowPopup {
 }
 
 // @ts-ignore
-style('/windows.css');
+style('/windows/windows.css');
 
 // ! Dragability from: https://www.w3schools.com/howto/howto_js_draggable.asp
 function dragWindowFrame(elmnt) {
