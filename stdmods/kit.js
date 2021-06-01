@@ -87,3 +87,9 @@ function install(source, name, entry, type = 'localpath') {
         );
     }
 }
+
+function load(source) {
+    let script = document.createElement('script');
+    script.src = source;
+    document.body.appendChild(script);
+}
