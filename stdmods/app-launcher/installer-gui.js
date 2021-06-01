@@ -1,7 +1,5 @@
 // @ts-nocheck
 
-style('/installer-gui.css');
-
 class InstallerGUI extends WindowFrame {
     constructor() {
         super({
