@@ -72,6 +72,7 @@ class WindowFrame {
         this.title = options.title || 'Untitled Window';
         this.resize = options.resize ? options.resize.toLowerCase() : 'hv';
         this.dom = null;
+        this.windowContainer = null;
         WindowInstances.push(this);
     }
 
@@ -177,6 +178,102 @@ class WindowFrame {
         this.dom.style.height = `${this.height}px`;
         this.dom.style.top = '0';
         this.dom.style.left = '0';
+    }
+}
+
+class WindowPopup {
+    constructor(
+        options = {
+            width: undefined,
+            height: undefined,
+            resize: 'hv',
+        }
+    ) {
+        this.width = options.width;
+        this.height = options.height;
+        this.content = options.content || null;
+        this.id = options.id || Math.floor(Math.random() * 1000000);
+        this.resize = options.resize ? options.resize.toLowerCase() : 'hv';
+        this.dom = null;
+        this.windowContainer = null;
+        WindowInstances.push(this);
+    }
+
+    makeHandlebar() {
+        const handleBar = document.createElement('div');
+        handleBar.className = 'popup-window';
+        handleBar.id = `popup-window-${this.id}-handlebar`;
+        this.windowContainer = handleBar;
+
+        return handleBar;
+    }
+
+    makeFrame() {
+        const frame = document.createElement('div');
+
+        this.windowContainer = document.createElement('div');
+
+        frame.className = 'window-frame';
+        frame.id = `window-frame-${this.id}`;
+
+        if (this.width) frame.style.width = `${this.width}px`;
+        if (this.height) frame.style.height = `${this.height}px`;
+
+        frame.appendChild(this.makeHandlebar());
+        if (this.content) frame.appendChild(this.content);
+        return frame;
+    }
+
+    show() {
+        const frame = this.makeFrame();
+
+        frame.addEventListener('mousedown', () => {
+            this.focus();
+        });
+
+        if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0) {
+            frame.style.resize = 'both';
+        } else if (this.resize == 'h') {
+            frame.style.resize = 'horizontal';
+        } else if (this.resize == 'v') {
+            frame.style.resize = 'vertical';
+        }
+
+        this.dom = frame;
+        document.body.appendChild(frame);
+        dragWindowFrame(frame);
+    }
+
+    unfocus() {
+        this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
+    }
+
+    focus() {
+        WindowInstances.forEach((frame) => {
+            frame.unfocus();
+        });
+        this.dom.style.zIndex = '1000';
+    }
+
+    exit(event) {
+        this.dom.remove();
+        WindowInstances.splice(WindowInstances.indexOf(this), 1);
+    }
+
+    maximize(event) {
+        this.height = innerHeight;
+        this.width = innerWidth;
+        this.dom.style.width = `${this.width}px`;
+        this.dom.style.height = `${this.height}px`;
+        this.dom.style.top = '0';
+        this.dom.style.left = '0';
+    }
+
+    resize(width, height) {
+        this.width = width;
+        this.height = height;
+        this.dom.style.width = `${width}px`;
+        this.dom.style.height = `${height}px`;
     }
 }
 
