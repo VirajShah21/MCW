@@ -59,14 +59,14 @@ const WindowInstances = [];
 class WindowFrame {
     constructor(
         options = {
-            width: 300,
-            height: 300,
+            width: undefined,
+            height: undefined,
             title: 'Untitled Window',
             resize: 'hv',
         }
     ) {
-        this.width = options.width || 300;
-        this.height = options.height || 300;
+        this.width = options.width;
+        this.height = options.height;
         this.content = options.content || null;
         this.id = options.id || Math.floor(Math.random() * 1000000);
         this.title = options.title || 'Untitled Window';
@@ -125,8 +125,8 @@ class WindowFrame {
         frame.className = 'window-frame';
         frame.id = `window-frame-${this.id}`;
 
-        frame.style.width = `${this.width}px`;
-        frame.style.height = `${this.height}px`;
+        if (this.width) frame.style.width = `${this.width}px`;
+        if (this.height) frame.style.height = `${this.height}px`;
 
         frame.appendChild(this.makeHandlebar());
         frame.appendChild(this.windowContainer);
