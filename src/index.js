@@ -1,7 +1,7 @@
 import express from 'express';
-import { DATAPATH, MODLIST_PATH, STATICPATH } from './macroexp.js';
+import { STATICPATH } from './macroexp.js';
 import * as path from 'path';
-import { existsSync, mkdirSync, rename, mkdir, copyFile, lstatSync } from 'fs';
+import { existsSync, copyFile, lstatSync } from 'fs';
 import { URL } from 'url'; // in Browser, the URL in native accessible on window
 import { registerMod } from './functions.js';
 import bodyParser from 'body-parser';
