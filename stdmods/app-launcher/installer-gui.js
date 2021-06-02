@@ -47,10 +47,8 @@ class InstallerGUI extends WindowFrame {
             text: 'Install',
             events: {
               click: (ev) => {
-                const name = this.dom.querySelector('.pkgname').value;
                 const source = this.dom.querySelector('.pkgsource').value;
-                const entry = this.dom.querySelector('.pkgentry').value;
-                install(source, name, entry);
+                installViaServer(source);
               },
             },
           }),

@@ -39,6 +39,7 @@ app.post('/kit/install', async (req, res) => {
     const writeTo = path.join(STATICPATH, name);
     if (lstatSync(source).isFile()) {
       createReadStream(source).pipe(unzipper.Extract({ path: writeTo }));
+      await registerMod(name, entry);
       res.send({
         success: true,
         installationDirectory: writeTo,
