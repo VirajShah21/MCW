@@ -77,9 +77,7 @@ class WindowFrame {
     handleBar.innerHTML = this.title;
     handleBar.className = 'window-frame-handlebar';
     handleBar.id = `window-frame-${this.id}-handlebar`;
-
     handleBar.appendChild(this.makeHandlebarButtons());
-
     return handleBar;
   }
 
@@ -130,6 +128,7 @@ class WindowFrame {
     this.dom = frame;
     document.body.appendChild(frame);
     dragWindowFrame(frame);
+    this.focus();
   }
 
   /**
@@ -285,6 +284,7 @@ class WindowPopup {
     this.dom = frame;
     document.body.appendChild(frame);
     dragWindowFrame(frame);
+    this.focus();
   }
 
   /**
