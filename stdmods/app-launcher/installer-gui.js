@@ -11,7 +11,7 @@ class InstallerGUI extends WindowFrame {
     super({
       title: 'Installer GUI',
       width: 700,
-      height: 500,
+      height: 250,
     });
     this.oldWallpaper = wallpaper();
   }
@@ -28,47 +28,31 @@ class InstallerGUI extends WindowFrame {
         children: [
           TextLabel(),
           H1Label({ text: 'Package Installer' }),
-          H2Label({ text: 'Name' }),
           TextLabel({
-            styles: { display: 'block' },
-            text: 'Note: Certain packages may require a specific name.',
-          }),
-          TextInput({
-            placeholder: 'Package Named Alias',
-            classes: ['pkgname'],
-          }),
-          H2Label({ text: 'Source' }),
-          TextLabel({
-            styles: { display: 'block' },
+            styles: {
+              display: 'block',
+              marginTop: '50px',
+              marginBottom: '25px',
+            },
             text: 'Please enter the full path to the package/script. Drag/drop may work on certain devices.',
           }),
           TextInput({
             placeholder: 'Full Path (Source)',
             classes: ['pkgsource'],
-          }),
-          H2Label({ text: 'Entry File' }),
-          TextLabel({
-            styles: { display: 'block' },
-            text: 'Enter the main script file for this package, in the format <name>/<entry>.js',
-          }),
-          TextInput({ placeholder: 'Entry File', classes: ['pkgentry'] }),
-          ContentBlock({
             styles: {
-              textAlign: 'center',
+              width: '500px',
             },
-            children: [
-              ClickButton({
-                text: 'Install',
-                events: {
-                  click: (ev) => {
-                    const name = this.dom.querySelector('.pkgname').value;
-                    const source = this.dom.querySelector('.pkgsource').value;
-                    const entry = this.dom.querySelector('.pkgentry').value;
-                    install(source, name, entry);
-                  },
-                },
-              }),
-            ],
+          }),
+          ClickButton({
+            text: 'Install',
+            events: {
+              click: (ev) => {
+                const name = this.dom.querySelector('.pkgname').value;
+                const source = this.dom.querySelector('.pkgsource').value;
+                const entry = this.dom.querySelector('.pkgentry').value;
+                install(source, name, entry);
+              },
+            },
           }),
         ],
       })
