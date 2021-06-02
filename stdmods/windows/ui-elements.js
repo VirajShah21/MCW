@@ -29,18 +29,31 @@ function H2Label(options = {}) {
   return node;
 }
 
-function TextLabel(options) {
+function TextLabel(options = {}) {
   const node = document.createElement('span');
   BindBasics(node, options);
   return node;
 }
 
-function SquareIcon(options) {
+function SquareIcon(options = {}) {
   const node = document.createElement('img');
   BindBasics(node, options);
   node.src = options.src;
   node.style.width = `${options.size || 25}px`;
   node.style.height = `${options.size || 25}px`;
+  return node;
+}
+
+function HorizontalDivider(options = {}) {
+  const node = document.createElement('hr');
+  BindBasics(node, options);
+  node.style.border = options.styles.border || 'none';
+  node.style.background =
+    options.styles.background ||
+    options.styles.backgroundColor ||
+    options.styles.backgroundImage ||
+    'linear-gradient(to bottom, gray, silver)';
+  node.style.height = options.styles.height || '3px';
   return node;
 }
 

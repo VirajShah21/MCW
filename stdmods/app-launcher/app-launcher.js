@@ -80,7 +80,10 @@ class AppLauncher extends WindowPopup {
     let curr = this.windowContainer.querySelector('.applist');
     if (curr) curr.remove();
     this.windowContainer.appendChild(
-      ContentBlock({ children, classes: ['applist'] })
+      ContentBlock({
+        children,
+        classes: ['applist'],
+      })
     );
   }
 
@@ -111,6 +114,32 @@ class AppLauncher extends WindowPopup {
               width: '50px',
               height: '50px',
               margin: '12.5px',
+              float: 'left',
+            },
+          }),
+          ClickButton({
+            children: [
+              SquareIcon({
+                src: 'app-launcher/power.png',
+              }),
+            ],
+            events: {
+              click: (ev) => {
+                close();
+              },
+            },
+            styles: {
+              width: '50px',
+              height: '50px',
+              marginTop: '12.5px',
+              marginRight: '12.5px',
+              filter: 'hue-rotate(100deg)',
+            },
+          }),
+          HorizontalDivider({
+            styles: {
+              background: 'rgba(255, 255, 255, 0.25)',
+              height: '1px',
             },
           }),
         ],
