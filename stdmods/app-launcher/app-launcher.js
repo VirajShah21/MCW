@@ -32,8 +32,8 @@ class AppLauncher extends WindowPopup {
    *
    * @memberOf AppLauncher
    */
-  static register(name, startCallback) {
-    AppRegistrar[name] = startCallback;
+  static register(name, startCallback, icon) {
+    AppRegistrar[name] = { main: startCallback, icon };
   }
 
   /**
@@ -46,24 +46,34 @@ class AppLauncher extends WindowPopup {
     const children = [];
     for (const appName in AppRegistrar) {
       children.push(
-        ContentBlock({
+        ClickButton({
           styles: {
-            paddingLeft: '12.5px',
-            paddingRight: '12.5px',
+            width: `${this.width / 5 - 12.5}px`,
+            height: `${this.width / 5 - 12.5}px`,
+            float: 'left',
+            marginLeft: '12.5px',
           },
           children: [
-            ClickButton({
+            SquareIcon({
+              src: AppRegistrar[appName].icon || '/app-launcher/gear.png',
+              size: 50,
+            }),
+            TextLabel({
+              text: (() => {
+                let text = appName;
+                if (text.length > 15) text = `${text.substring(0, 12)}...`;
+                return text;
+              })(),
               styles: {
-                width: '100%',
-              },
-              text: appName,
-              events: {
-                click: () => {
-                  AppRegistrar[appName]();
-                },
+                fontSize: '10px',
               },
             }),
           ],
+          events: {
+            click: () => {
+              AppRegistrar[appName].main();
+            },
+          },
         })
       );
     }
