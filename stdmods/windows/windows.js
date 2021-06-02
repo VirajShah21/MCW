@@ -201,7 +201,7 @@ class WindowPopup {
 
     makeHandlebar() {
         const handleBar = document.createElement('div');
-        handleBar.className = 'popup-window';
+        handleBar.className = 'popup-window-handlebar';
         handleBar.id = `popup-window-${this.id}-handlebar`;
         this.windowContainer = handleBar;
 
@@ -213,7 +213,7 @@ class WindowPopup {
 
         this.windowContainer = document.createElement('div');
 
-        frame.className = 'window-frame';
+        frame.className = 'window-frame popup-window';
         frame.id = `window-frame-${this.id}`;
 
         if (this.width) frame.style.width = `${this.width}px`;
