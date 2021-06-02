@@ -1,12 +1,37 @@
 // @ts-nocheck
+
+/**
+ * A register which maps application names to their entry callable
+ */
 const AppRegistrar = {};
 
+/**
+ * The AppLauncher window definition
+ *
+ * @class AppLauncher
+ * @extends {WindowPopup}
+ */
 class AppLauncher extends WindowPopup {
+    /**
+     * Creates an instance of AppLauncher.
+     * The default size is 500x500 and cannot be resized
+     *
+     * @memberOf AppLauncher
+     */
     constructor() {
         super({ width: 500, height: 500, resize: 'none' });
         this.sideLength = 500;
     }
 
+    /**
+     * Register an application name and its callable with AppRegistrar.
+     *
+     * @static
+     * @param {any} name The application name
+     * @param {any} startCallback The entry function for the app
+     *
+     * @memberOf AppLauncher
+     */
     static register(name, startCallback) {
         AppRegistrar[name] = startCallback;
     }
