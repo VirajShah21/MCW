@@ -27,19 +27,19 @@ class InstallerGUI extends WindowFrame {
                         styles: { display: 'block' },
                         text: 'Note: Certain packages may require a specific name.',
                     }),
-                    TextInput({ placeholder: 'Package Named Alias' }),
+                    TextInput({ placeholder: 'Package Named Alias', classes: ['pkgname'] }),
                     H2Label({ text: 'Source' }),
                     TextLabel({
                         styles: { display: 'block' },
                         text: 'Please enter the full path to the package/script. Drag/drop may work on certain devices.',
                     }),
-                    TextInput({ placeholder: 'Full Path (Source)' }),
+                    TextInput({ placeholder: 'Full Path (Source)', classes: ['pkgsource'] }),
                     H2Label({ text: 'Entry File' }),
                     TextLabel({
                         styles: { display: 'block' },
                         text: 'Enter the main script file for this package, in the format <name>/<entry>.js',
                     }),
-                    TextInput({ placeholder: 'Entry File' }),
+                    TextInput({ placeholder: 'Entry File', classes: ['pkgentry'] }),
                     ContentBlock({
                         styles: {
                             textAlign: 'center',
@@ -47,28 +47,20 @@ class InstallerGUI extends WindowFrame {
                         children: [
                             ClickButton({
                                 text: 'Install',
+                                events: {
+                                    click: (ev) => {
+                                        const name = this.dom.querySelector('.pkgname');
+                                        const source = this.dom.querySelector('.pkgsource');
+                                        const entry = this.dom.querySelector('.pkgentry');
+                                        install(source, name, entry);
+                                    },
+                                },
                             }),
                         ],
                     }),
                 ],
             })
         );
-    }
-
-    focus() {
-        super.focus();
-        this.oldWallpaper = wallpaper();
-        wallpaper(
-            'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
-        );
-    }
-
-    unfocus() {
-        super.unfocus();
-        if (this.oldWallpaper) {
-            wallpaper(this.oldWallpaper);
-            this.oldWallpaper = null;
-        }
     }
 }
 
