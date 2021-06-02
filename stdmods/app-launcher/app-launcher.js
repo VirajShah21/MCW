@@ -97,7 +97,6 @@ class AppLauncher extends WindowPopup {
         },
         children: [
           ClickButton({
-            text: 'Toggle',
             events: {
               click: (ev) => {
                 if (this.sideLength == 500) {
@@ -115,6 +114,7 @@ class AppLauncher extends WindowPopup {
               height: '50px',
               margin: '12.5px',
               float: 'left',
+              fontSize: '25px',
             },
           }),
           ClickButton({
@@ -125,7 +125,7 @@ class AppLauncher extends WindowPopup {
             ],
             events: {
               click: (ev) => {
-                close();
+                document.write('<style>html{background:black}</style>');
               },
             },
             styles: {
@@ -136,18 +136,44 @@ class AppLauncher extends WindowPopup {
               filter: 'hue-rotate(100deg)',
             },
           }),
+          ClickButton({
+            children: [
+              SquareIcon({
+                src: 'app-launcher/refresh.png',
+              }),
+            ],
+            events: {
+              click: (ev) => {
+                document.write('<style>html{background:black}</style>');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              },
+            },
+            styles: {
+              width: '50px',
+              height: '50px',
+              marginTop: '12.5px',
+              marginRight: '12.5px',
+              filter: 'hue-rotate(200deg)',
+            },
+          }),
           HorizontalDivider({
             styles: {
               background: 'rgba(255, 255, 255, 0.25)',
               height: '1px',
             },
           }),
+          TextLabel({ text: 'Loading Applications...', classes: ['applist'] }),
         ],
       })
     );
-    this.redraw();
+    setTimeout(() => {
+      this.redraw();
+    }, 500);
   }
 }
 
 const launcher = new AppLauncher();
+
 launcher.show();
