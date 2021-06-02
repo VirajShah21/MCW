@@ -79,11 +79,12 @@ span {
 }
 
 .popup-window {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
 }
 .popup-window button {
-  background: rgba(0, 0, 0, 0.1);
-  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(50, 50, 50, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /*# sourceMappingURL=windows.css.map */
