@@ -17,7 +17,7 @@ span {
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   overflow: auto;
-  transition: width 2s, height 2s;
+  transition: width 0.1s, height 0.1s;
 }
 .window-frame button {
   text-decoration: none;
