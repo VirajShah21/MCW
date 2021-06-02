@@ -1,103 +1,88 @@
 body {
-    margin: 0;
-}
-
-input {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    padding: 2px;
-    box-sizing: border-box;
-}
-
-input::placeholder {
-    color: gray;
+  margin: 0;
+  background: url(https://images.unsplash.com/photo-1533133303533-682ef118cdce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1026&q=80);
+  background-size: cover;
 }
 
 span {
-    font-size: 14px;
-}
-
-button {
-    text-decoration: none;
-    font-family: '.LucidaGrandeUI', 'Lucida Grande', 'Lucida sans unicode';
-    color: black;
-    font-size: 11px;
-    padding: 1px 7px;
-    border: 1px solid #9c9c9c;
-    display: inline-block;
-    background-image: -webkit-linear-gradient(
-        #ffffff 0%,
-        #f6f6f6 30%,
-        #f3f3f3 45%,
-        #ededed 60%,
-        #eeeeee 100%
-    );
-    border-radius: 3px;
-    cursor: default;
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-}
-
-button:active {
-    border-color: #705ebb;
-    background-image: -webkit-linear-gradient(
-        #acc5e9 0%,
-        #a3c0f2 18%,
-        #61a0ed 39%,
-        #55a3f2 70%,
-        #82c2f1 91.72%,
-        #9ad2f2 100%
-    );
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.65);
-}
-
-button:disabled {
-    color: #999 !important;
-    background-image: -webkit-linear-gradient(
-        #fbf8f8 0%,
-        #f0f0f0 30%,
-        #e3e3e3 45%,
-        #d7d7d7 60%,
-        #cbc9c9 100%
-    );
+  font-size: 14px;
 }
 
 .window-frame {
-    position: absolute;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-sizing: border-box;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    overflow: auto;
+  position: absolute;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+.window-frame button {
+  text-decoration: none;
+  font-family: ".LucidaGrandeUI", "Lucida Grande", "Lucida sans unicode";
+  color: black;
+  font-size: 11px;
+  padding: 1px 7px;
+  border: 1px solid #9c9c9c;
+  display: inline-block;
+  background-image: -webkit-linear-gradient(#ffffff 0%, #f6f6f6 30%, #f3f3f3 45%, #ededed 60%, #eeeeee 100%);
+  border-radius: 3px;
+  cursor: default;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+.window-frame button:active {
+  border-color: #705ebb;
+  background-image: -webkit-linear-gradient(#acc5e9 0%, #a3c0f2 18%, #61a0ed 39%, #55a3f2 70%, #82c2f1 91.72%, #9ad2f2 100%);
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.65);
+}
+.window-frame button:disabled {
+  color: #999 !important;
+  background-image: -webkit-linear-gradient(#fbf8f8 0%, #f0f0f0 30%, #e3e3e3 45%, #d7d7d7 60%, #cbc9c9 100%);
+}
+.window-frame .window-frame-handlebar {
+  background: rgba(250, 250, 250, 0.8);
+  width: 100%;
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+  box-sizing: border-box;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.window-frame .handlebar-btn-wrapper {
+  position: absolute;
+  left: 5px;
+  top: 0;
+}
+.window-frame .handlebar-btn {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-right: 5px;
+  padding: 5px;
+}
+.window-frame input {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 2px;
+  box-sizing: border-box;
+}
+.window-frame input::placeholder {
+  color: gray;
 }
 
 .window-frame::-webkit-resizer {
-    background-color: transparent;
+  background-color: transparent;
 }
 
-.window-frame-handlebar {
-    background: rgba(250, 250, 250, 0.8);
-    width: 100%;
-    padding: 5px;
-    font-size: 12px;
-    text-align: center;
-    box-sizing: border-box;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.popup-window {
+  background: rgba(255, 255, 255, 0.5);
+}
+.popup-window button {
+  background: rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
-.handlebar-btn-wrapper {
-    position: absolute;
-    left: 5px;
-    top: 0;
-}
-
-.handlebar-btn {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    margin-right: 5px;
-    padding: 5px;
-}
+/*# sourceMappingURL=windows.css.map */
