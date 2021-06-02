@@ -36,6 +36,12 @@ class AppLauncher extends WindowPopup {
     AppRegistrar[name] = startCallback;
   }
 
+  /**
+   * Redraws the application list.
+   *
+   *
+   * @memberOf AppLauncher
+   */
   redraw() {
     const children = [];
     for (const appName in AppRegistrar) {

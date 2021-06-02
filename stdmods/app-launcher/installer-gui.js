@@ -1,5 +1,11 @@
 // @ts-nocheck
 
+/**
+ * The WindowFrame for the install() kit function
+ *
+ * @class InstallerGUI
+ * @extends {WindowFrame}
+ */
 class InstallerGUI extends WindowFrame {
   constructor() {
     super({
