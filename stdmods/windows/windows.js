@@ -566,3 +566,12 @@ confirm = async function (message, title = 'Confirm') {
     }).show();
   });
 };
+
+document.addEventListener(
+  'contextmenu',
+  function (e) {
+    alert('MCW does not support context menus just yet.'); //here you draw your own menu
+    e.preventDefault();
+  },
+  false
+);
