@@ -1,43 +1,37 @@
-function ContentBlock(options = {}) {
-  const node = document.createElement('div');
+function UINode(element, options) {
+  const node = document.createElement(element);
   BindBasics(node, options);
   return node;
+}
+
+function ContentBlock(options = {}) {
+  return UINode('div', options);
 }
 
 function ClickButton(options = {}) {
-  const node = document.createElement('button');
-  BindBasics(node, options);
-  return node;
+  return UINode('button', options);
 }
 
 function TextInput(options = {}) {
-  const node = document.createElement('input');
-  BindBasics(node, options);
+  const node = UINode('input', options);
   node.placeholder = options.placeholder || '';
   return node;
 }
 
 function H1Label(options = {}) {
-  const node = document.createElement('h1');
-  BindBasics(node, options);
-  return node;
+  return UINode('h1', options);
 }
 
 function H2Label(options = {}) {
-  const node = document.createElement('h2');
-  BindBasics(node, options);
-  return node;
+  return UINode('h2', options);
 }
 
 function TextLabel(options = {}) {
-  const node = document.createElement('span');
-  BindBasics(node, options);
-  return node;
+  return UINode('span', options);
 }
 
 function SquareIcon(options = {}) {
-  const node = document.createElement('img');
-  BindBasics(node, options);
+  const node = UINode('img', options);
   node.src = options.src;
   node.style.width = `${options.size || 25}px`;
   node.style.height = `${options.size || 25}px`;
@@ -45,8 +39,7 @@ function SquareIcon(options = {}) {
 }
 
 function HorizontalDivider(options = {}) {
-  const node = document.createElement('hr');
-  BindBasics(node, options);
+  const node = UINode('hr', options);
   node.style.border = options.styles.border || 'none';
   node.style.background =
     options.styles.background ||
