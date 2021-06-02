@@ -10,7 +10,7 @@ export async function registerMod(name, entry) {
                 return;
             }
             let modlist = JSON.parse(data.toString());
-            modlist[name] = path.join(STATICPATH, name, entry);
+            modlist[name] = path.join(name, entry);
             writeFile(MODLIST_PATH, JSON.stringify(modlist, null, 4), (err2) => {
                 if (err2) reject(err2);
                 else resolve();
