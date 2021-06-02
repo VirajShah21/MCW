@@ -1,18 +1,18 @@
 .window-frame {
-    position: absolute;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-sizing: border-box;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    overflow: auto;
+  position: absolute;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  overflow: auto;
 
-    @import 'buttons.scss';
-    @import 'handlebars.scss';
-    @import 'inputs.scss';
+  @import 'buttons.scss';
+  @import 'handlebars.scss';
+  @import 'inputs.scss';
 }
 
 .window-frame::-webkit-resizer {
-    background-color: transparent;
+  background-color: transparent;
 }

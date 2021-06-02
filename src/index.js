@@ -23,39 +23,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/kit/install', async (req, res) => {
-    const { source, name, entry } = Object(req.body);
-    if (existsSync(source)) {
-        const writeTo = path.join(STATICPATH, name);
-        if (lstatSync(source).isFile())
-            copyFile(source, writeTo, async () => {
-                await registerMod(name, entry);
-                res.send({
-                    success: true,
-                    installationDirectory: writeTo,
-                    entry: `${writeTo}`,
-                });
-            });
-        else if (lstatSync(source).isDirectory())
-            copyDirectory(source, writeTo, async () => {
-                await registerMod(name, entry);
-                res.send({
-                    success: true,
-                    installationDirectory: writeTo,
-                    entry: `${writeTo}`,
-                });
-            });
-    } else {
+  const { source, name, entry } = Object(req.body);
+  if (existsSync(source)) {
+    const writeTo = path.join(STATICPATH, name);
+    if (lstatSync(source).isFile())
+      copyFile(source, writeTo, async () => {
+        await registerMod(name, entry);
         res.send({
-            success: false,
-            error: `No source directory ${source}`,
+          success: true,
+          installationDirectory: writeTo,
+          entry: `${writeTo}`,
         });
-    }
+      });
+    else if (lstatSync(source).isDirectory())
+      copyDirectory(source, writeTo, async () => {
+        await registerMod(name, entry);
+        res.send({
+          success: true,
+          installationDirectory: writeTo,
+          entry: `${writeTo}`,
+        });
+      });
+  } else {
+    res.send({
+      success: false,
+      error: `No source directory ${source}`,
+    });
+  }
 });
 
 app.listen(3000, () => {
-    console.log('Listening on http://localhost:3000');
+  console.log('Listening on http://localhost:3000');
 });

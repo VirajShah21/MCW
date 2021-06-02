@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 
 <html lang="en-US">
-    <head>
-        <meta charset="UTF-8" />
-        <title>MCW</title>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MCW</title>
+  </head>
 
-    <body>
-        <!-- kit.js is the basic development kit for mods -->
-        <script src="/kit.js"></script>
-        <!-- windows.js is the default implementation for a window manager -->
-        <script src="/windows/windows.js"></script>
-        <!-- app-launcher.js is the window which can launch apps -->
-        <script src="/app-launcher/app-launcher.js"></script>
-        <!-- installer-gui is the GUI for the (kit.js) install() command -->
-        <script src="/app-launcher/installer-gui.js"></script>
-        <script>
-            fetch('/modlist.json', {
-                headers: {
-                    'content-type': 'application/json',
-                },
-            })
-                .then((data) => {
-                    return data.json();
-                })
-                .then((mods) => {
-                    for (mod in mods) {
-                        let tag = document.createElement('script');
-                        tag.src = mods[mod];
-                        document.head.appendChild(tag);
-                    }
-                })
-                .catch((err) => {
-                    alert(`There was an issue fetching the list of mods\n${err}`);
-                    console.error(err);
-                });
-        </script>
-    </body>
+  <body>
+    <!-- kit.js is the basic development kit for mods -->
+    <script src="/kit.js"></script>
+    <!-- windows.js is the default implementation for a window manager -->
+    <script src="/windows/windows.js"></script>
+    <!-- app-launcher.js is the window which can launch apps -->
+    <script src="/app-launcher/app-launcher.js"></script>
+    <!-- installer-gui is the GUI for the (kit.js) install() command -->
+    <script src="/app-launcher/installer-gui.js"></script>
+    <script>
+      fetch('/modlist.json', {
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+        .then((data) => {
+          return data.json();
+        })
+        .then((mods) => {
+          for (mod in mods) {
+            let tag = document.createElement('script');
+            tag.src = mods[mod];
+            document.head.appendChild(tag);
+          }
+        })
+        .catch((err) => {
+          alert(`There was an issue fetching the list of mods\n${err}`);
+          console.error(err);
+        });
+    </script>
+  </body>
 </html>
