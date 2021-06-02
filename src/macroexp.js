@@ -1,6 +1,7 @@
 /**
  * Contains all the Macro expressions which are exported as constants
  */
+
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -12,10 +13,13 @@ import {
     WIN_USERSDIR,
 } from './constants.js';
 
+/** The server's device username. */
 export const USERNAME = os.userInfo().username;
 
+/** The type of operating system the server is running on. */
 export const OSTYPE = os.type();
 
+/** The data path for the server (operating system-dependent) */
 export const DATAPATH = (() => {
     if (OSTYPE == WIN_OSTYPE) {
         const winpath = path.join(WIN_USERSDIR, 'mcw');
@@ -30,12 +34,14 @@ export const DATAPATH = (() => {
     }
 })();
 
+/** The static datapath for the server (relative to the datapath) */
 export const STATICPATH = (() => {
     const spath = path.join(DATAPATH, 'static');
     if (!existsSync(spath)) mkdirSync(spath);
     return spath;
 })();
 
+/** The path to modlist.json */
 export const MODLIST_PATH = (() => {
     const mlpath = path.join(STATICPATH, 'modlist.json');
     if (!existsSync(mlpath)) writeFileSync(mlpath, '{}');

@@ -7,9 +7,13 @@
     </head>
 
     <body>
+        <!-- kit.js is the basic development kit for mods -->
         <script src="/kit.js"></script>
+        <!-- windows.js is the default implementation for a window manager -->
         <script src="/windows/windows.js"></script>
+        <!-- app-launcher.js is the window which can launch apps -->
         <script src="/app-launcher/app-launcher.js"></script>
+        <!-- installer-gui is the GUI for the (kit.js) install() command -->
         <script src="/app-launcher/installer-gui.js"></script>
         <script>
             fetch('/modlist.json', {
