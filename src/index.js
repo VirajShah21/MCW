@@ -1,11 +1,12 @@
 import express from 'express';
 import { STATICPATH } from './macroexp.js';
 import * as path from 'path';
-import { existsSync, copyFile, lstatSync } from 'fs';
+import { existsSync, copyFile, lstatSync, createReadStream } from 'fs';
 import { URL } from 'url'; // in Browser, the URL in native accessible on window
 import { registerMod } from './functions.js';
 import bodyParser from 'body-parser';
 import copyDirectory from 'recursive-copy';
+import unzipper from 'unzipper';
 
 // ! jshint/ts checking is disable because of `import.meta.url`
 // jshint ignore:start
@@ -27,6 +28,41 @@ app.get('/', (req, res) => {
 });
 
 app.post('/kit/install', async (req, res) => {
+  const source = req.body.source;
+  const name = (() => {
+    let tmp = path.basename(source);
+    return tmp.substring(0, tmp.lastIndexOf('.zip'));
+  })();
+  const entry = 'index.js';
+
+  if (existsSync(source)) {
+    const writeTo = path.join(STATICPATH, name);
+    if (lstatSync(source).isFile()) {
+      createReadStream(source).pipe(unzipper.Extract({ path: writeTo }));
+      res.send({
+        success: true,
+        installationDirectory: writeTo,
+        entry: `${writeTo}`,
+      });
+    } else if (lstatSync(source).isDirectory()) {
+      copyDirectory(source, writeTo, async () => {
+        await registerMod(name, entry);
+        res.send({
+          success: true,
+          installationDirectory: writeTo,
+          entry: `${writeTo}`,
+        });
+      });
+    }
+  } else {
+    res.send({
+      success: false,
+      error: `No source directory ${source}`,
+    });
+  }
+});
+
+app.post('/kit/install-legacy', async (req, res) => {
   const { source, name, entry } = Object(req.body);
   if (existsSync(source)) {
     const writeTo = path.join(STATICPATH, name);
