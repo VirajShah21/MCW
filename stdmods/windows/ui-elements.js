@@ -79,4 +79,8 @@ function BindEvents(node, eventListeners) {
     node.addEventListener('mousedown', eventListeners.mousedown);
   if (eventListeners.mouseup)
     node.addEventListener('mouseup', eventListeners.mouseup);
+  if (eventListeners.focus)
+    node.addEventListener('focus', eventListeners.focus);
+  if (eventListeners.unfocus)
+    node.addEventListener('focusout', eventListeners.unfocus);
 }
