@@ -1,3 +1,9 @@
+/**
+ * Asserts that a condition is true.
+ *
+ * @param {any} condition The condition/boolean
+ * @param {any} messageOrError The message or error to throw if false.
+ */
 function assert(condition, messageOrError) {
   if (!condition)
     throw typeof messageOrError == 'string'
@@ -5,6 +11,14 @@ function assert(condition, messageOrError) {
       : messageOrError;
 }
 
+/**
+ * Installs a mod to the static datapath
+ *
+ * @param {any} source The source folder
+ * @param {any} name The name of the folder (and app)
+ * @param {any} entry The script file to import for the mod
+ * @param {string} [type='localpath'] The installation method
+ */
 function install(source, name, entry, type = 'localpath') {
   if (type == 'localpath') {
     fetch('/kit/install', {
@@ -42,12 +56,22 @@ function install(source, name, entry, type = 'localpath') {
   }
 }
 
+/**
+ * Loads a script file to the browser
+ *
+ * @param {any} source The static path of the script
+ */
 function load(source) {
   let script = document.createElement('script');
   script.src = source;
   document.head.appendChild(script);
 }
 
+/**
+ * Loads a css stylesheet to the browser
+ *
+ * @param {any} source The static path of the stylesheet
+ */
 function style(source) {
   let link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -55,6 +79,12 @@ function style(source) {
   document.head.appendChild(link);
 }
 
+/**
+ * Sets the window's wallpaper
+ *
+ * @param {any | undefined} source The static path of the wallpaper image
+ * @returns The source of the current wallpaper if no source argument is provided
+ */
 function wallpaper(source) {
   if (!source) {
     let curr = document.body.style.backgroundImage.replace('url(', '');
