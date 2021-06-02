@@ -53,13 +53,10 @@ class BaseWindow {
       this.focus();
     });
 
-    if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0) {
+    if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0)
       frame.style.resize = 'both';
-    } else if (this.resize == 'h') {
-      frame.style.resize = 'horizontal';
-    } else if (this.resize == 'v') {
-      frame.style.resize = 'vertical';
-    }
+    else if (this.resize == 'h') frame.style.resize = 'horizontal';
+    else if (this.resize == 'v') frame.style.resize = 'vertical';
 
     frame.style.top = '50%';
     frame.style.left = '50%';
