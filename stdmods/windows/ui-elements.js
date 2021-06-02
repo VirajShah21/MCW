@@ -35,6 +35,15 @@ function TextLabel(options) {
   return node;
 }
 
+function SquareIcon(options) {
+  const node = document.createElement('img');
+  BindBasics(node, options);
+  node.src = options.src;
+  node.style.width = `${options.size || 25}px`;
+  node.style.height = `${options.size || 25}px`;
+  return node;
+}
+
 function BindBasics(node, options) {
   if (!options) return;
   if (options.id) node.id = options.id;
