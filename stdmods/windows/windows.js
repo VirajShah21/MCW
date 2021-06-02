@@ -1,13 +1,20 @@
+/** An array of windows */
 const WindowInstances = [];
+
+/**
+ * The WindowFrame class is responsible for displaying windows
+ *
+ * @class WindowFrame
+ */
 class WindowFrame {
-  constructor(
-    options = {
-      width: undefined,
-      height: undefined,
-      title: 'Untitled Window',
-      resize: 'hv',
-    }
-  ) {
+  /**
+   * Creates an instance of WindowFrame.
+   * @param {any} [options={}] Accepts options for width, height, content,
+   * id, title, and resize.
+   *
+   * @memberOf WindowFrame
+   */
+  constructor(options = {}) {
     this.width = options.width;
     this.height = options.height;
     this.content = options.content || null;
@@ -19,6 +26,13 @@ class WindowFrame {
     WindowInstances.push(this);
   }
 
+  /**
+   * Makes the three window control buttons for the `WindowFrame`
+   *
+   * @returns A div wrapper for the handlebar buttons
+   *
+   * @memberOf WindowFrame
+   */
   makeHandlebarButtons() {
     const wrapper = document.createElement('div');
 
@@ -51,6 +65,13 @@ class WindowFrame {
     return wrapper;
   }
 
+  /**
+   * Makes the handlebar for the `WindowFrame`
+   *
+   * @returns A div wrapper for the handlebar
+   *
+   * @memberOf WindowFrame
+   */
   makeHandlebar() {
     const handleBar = document.createElement('div');
     handleBar.innerHTML = this.title;
@@ -62,6 +83,13 @@ class WindowFrame {
     return handleBar;
   }
 
+  /**
+   * Makes the window frame.
+   *
+   * @returns The div wrapper of the window frame
+   *
+   * @memberOf WindowFrame
+   */
   makeFrame() {
     const frame = document.createElement('div');
     this.windowContainer = document.createElement('div');
@@ -78,6 +106,12 @@ class WindowFrame {
     return frame;
   }
 
+  /**
+   * Shows the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
   show() {
     const frame = this.makeFrame();
 
@@ -98,10 +132,22 @@ class WindowFrame {
     dragWindowFrame(frame);
   }
 
+  /**
+   * Unfocuses the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
   unfocus() {
     this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
   }
 
+  /**
+   * Focuses the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
   focus() {
     WindowInstances.forEach((frame) => {
       frame.unfocus();
@@ -109,11 +155,25 @@ class WindowFrame {
     this.dom.style.zIndex = '1000';
   }
 
+  /**
+   * Exits the `WindowFrame` process.
+   *
+   * @param {any} event The event invoking the exit function
+   *
+   * @memberOf WindowFrame
+   */
   exit(event) {
     this.dom.remove();
     WindowInstances.splice(WindowInstances.indexOf(this), 1);
   }
 
+  /**
+   * Maximizes the `WindowFrame`.
+   *
+   * @param {any} event The event invoking the maximize function
+   *
+   * @memberOf WindowFrame
+   */
   maximize(event) {
     this.height = innerHeight;
     this.width = innerWidth;
@@ -124,14 +184,20 @@ class WindowFrame {
   }
 }
 
+/**
+ * The WindowPopup class displays a frameless popup window
+ *
+ * @class WindowPopup
+ */
 class WindowPopup {
-  constructor(
-    options = {
-      width: undefined,
-      height: undefined,
-      resize: 'hv',
-    }
-  ) {
+  /**
+   * Creates an instance of WindowPopup.
+   * @param {any} [options={}] Takes width, height, content, id,
+   * and resize as options.
+   *
+   * @memberOf WindowPopup
+   */
+  constructor(options = {}) {
     this.width = options.width;
     this.height = options.height;
     this.content = options.content || null;
@@ -142,6 +208,13 @@ class WindowPopup {
     WindowInstances.push(this);
   }
 
+  /**
+   * Makes the handlebar (which spans the entire window)
+   *
+   * @returns The div wrapper for the handlebar (window overlay)
+   *
+   * @memberOf WindowPopup
+   */
   makeHandlebar() {
     const handleBar = document.createElement('div');
     handleBar.className = 'popup-window-handlebar';
@@ -151,6 +224,13 @@ class WindowPopup {
     return handleBar;
   }
 
+  /**
+   * Makes the frame
+   *
+   * @returns The div wrapper for the window frame
+   *
+   * @memberOf WindowPopup
+   */
   makeFrame() {
     const frame = document.createElement('div');
 
@@ -167,6 +247,12 @@ class WindowPopup {
     return frame;
   }
 
+  /**
+   * Shows the popup window.
+   *
+   *
+   * @memberOf WindowPopup
+   */
   show() {
     const frame = this.makeFrame();
 
@@ -187,10 +273,22 @@ class WindowPopup {
     dragWindowFrame(frame);
   }
 
+  /**
+   * Unfocuses the popup window.
+   *
+   *
+   * @memberOf WindowPopup
+   */
   unfocus() {
     this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
   }
 
+  /**
+   * Focuses the popup window.
+   *
+   *
+   * @memberOf WindowPopup
+   */
   focus() {
     WindowInstances.forEach((frame) => {
       frame.unfocus();
@@ -198,11 +296,25 @@ class WindowPopup {
     this.dom.style.zIndex = '1000';
   }
 
+  /**
+   * Exits the popup window.
+   *
+   * @param {any} event The event causing the exit
+   *
+   * @memberOf WindowPopup
+   */
   exit(event) {
     this.dom.remove();
     WindowInstances.splice(WindowInstances.indexOf(this), 1);
   }
 
+  /**
+   * Maximizes the popup window.
+   *
+   * @param {any} event The event causing the maximize
+   *
+   * @memberOf WindowPopup
+   */
   maximize(event) {
     this.height = innerHeight;
     this.width = innerWidth;
@@ -212,6 +324,14 @@ class WindowPopup {
     this.dom.style.left = '0';
   }
 
+  /**
+   * Resizes the popup window to a specific size.
+   *
+   * @param {any} width The window width
+   * @param {any} height The window height
+   *
+   * @memberOf WindowPopup
+   */
   resizeTo(width, height) {
     this.width = width;
     this.height = height;
@@ -223,7 +343,13 @@ class WindowPopup {
 // @ts-ignore
 style('/windows/windows.css');
 
-// ! Dragability from: https://www.w3schools.com/howto/howto_js_draggable.asp
+/**
+ * Makes an window with a handlebar draggable
+ *
+ * ! Dragability from: https://www.w3schools.com/howto/howto_js_draggable.asp
+ *
+ * @param {any} elmnt
+ */
 function dragWindowFrame(elmnt) {
   var pos1 = 0,
     pos2 = 0,
@@ -236,6 +362,11 @@ function dragWindowFrame(elmnt) {
     elmnt.onmousedown = dragMouseDown;
   }
 
+  /**
+   * Callback for drag mousedown event.
+   *
+   * @param {any} e Mousedown event
+   */
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
@@ -245,6 +376,11 @@ function dragWindowFrame(elmnt) {
     document.onmousemove = elementDrag;
   }
 
+  /**
+   * Drag event handler.
+   *
+   * @param {any} e Drag event.
+   */
   function elementDrag(e) {
     e = e || window.event;
     e.preventDefault();
@@ -256,6 +392,10 @@ function dragWindowFrame(elmnt) {
     elmnt.style.left = elmnt.offsetLeft - pos1 + 'px';
   }
 
+  /**
+   * Ends the drag event.
+   *
+   */
   function closeDragElement() {
     document.onmouseup = null;
     document.onmousemove = null;
