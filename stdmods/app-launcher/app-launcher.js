@@ -153,13 +153,7 @@ class AppLauncher extends WindowPopup {
                 }
               },
             },
-            styles: {
-              width: '50px',
-              height: '50px',
-              margin: '12.5px',
-              float: 'left',
-              fontSize: '25px',
-            },
+            classes: ['app-launcher-toggler'],
           }),
           ClickButton({
             children: [
@@ -174,13 +168,7 @@ class AppLauncher extends WindowPopup {
                 });
               },
             },
-            styles: {
-              width: '50px',
-              height: '50px',
-              marginTop: '12.5px',
-              marginRight: '12.5px',
-              filter: 'hue-rotate(100deg)',
-            },
+            classes: ['app-launcher-power-btn'],
           }),
           ClickButton({
             children: [
@@ -196,13 +184,7 @@ class AppLauncher extends WindowPopup {
                 }, 100);
               },
             },
-            styles: {
-              width: '50px',
-              height: '50px',
-              marginTop: '12.5px',
-              marginRight: '12.5px',
-              filter: 'hue-rotate(200deg)',
-            },
+            classes: ['app-launcher-refresh-btn'],
           }),
           HorizontalDivider({
             styles: {
@@ -228,10 +210,9 @@ class AppLauncher extends WindowPopup {
   }
 }
 
+style('/app-launcher/app-launcher.css');
 const launcher = new AppLauncher();
-
 launcher.show();
-
 setInterval(() => {
   launcher.redrawMinimizedApps();
 }, 1000);
