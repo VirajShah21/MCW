@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "body-parser": "^1.19.0",
-        "recursive-copy": "^2.0.11"
+        "recursive-copy": "^2.0.11",
+        "unzipper": "^0.10.11"
     }
 }
