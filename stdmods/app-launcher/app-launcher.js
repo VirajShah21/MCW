@@ -50,9 +50,8 @@ class AppLauncher extends WindowPopup {
           styles: {
             width: `${this.width / 5 - 12.5}px`,
             height: `${this.width / 5 - 12.5}px`,
-            float: 'left',
-            marginLeft: '12.5px',
           },
+          classes: ['app-list-app-btn'],
           children: [
             SquareIcon({
               src: AppRegistrar[appName].icon || '/app-launcher/gear.png',

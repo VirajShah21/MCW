@@ -1,21 +1,28 @@
-.app-launcher-toggler,
-.app-launcher-power-btn,
-.app-launcher-refresh-btn {
+button.app-launcher-toggler,
+button.app-launcher-power-btn,
+button.app-launcher-refresh-btn {
   width: 50px;
   height: 50px;
   margin-top: 12.5px;
   margin-left: 12.5px;
+  border-radius: 20px;
 }
 
-.app-launcher-toggler {
+button.app-launcher-toggler {
   float: left;
   font-size: 25px;
 }
 
-.app-launcher-power-btn {
+button.app-launcher-power-btn {
   filter: hue-rotate(100deg);
 }
 
-.app-launcher-refresh-btn {
+button.app-launcher-refresh-btn {
   filter: hue-rotate(200deg);
+}
+
+button.app-list-app-btn {
+  float: left;
+  margin-left: 12.5px;
+  border-radius: 20px;
 }
