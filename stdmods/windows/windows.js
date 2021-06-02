@@ -177,10 +177,24 @@ class WindowFrame {
   maximize(event) {
     this.height = innerHeight;
     this.width = innerWidth;
-    this.dom.style.width = `${this.width}px`;
-    this.dom.style.height = `${this.height}px`;
+    this.resizeTo(this.width, this.height);
     this.dom.style.top = '0';
     this.dom.style.left = '0';
+  }
+
+  /**
+   * Resizes the WindowFrame to a specific size.
+   *
+   * @param {any} width The window width
+   * @param {any} height The window height
+   *
+   * @memberOf WindowFrame
+   */
+  resizeTo(width, height) {
+    this.width = width;
+    this.height = height;
+    this.dom.style.width = `${width}px`;
+    this.dom.style.height = `${height}px`;
   }
 }
 
