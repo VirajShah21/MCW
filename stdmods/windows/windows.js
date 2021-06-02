@@ -3,19 +3,7 @@
 /** An array of windows */
 const WindowInstances = [];
 
-/**
- * The WindowFrame class is responsible for displaying windows
- *
- * @class WindowFrame
- */
-class WindowFrame {
-  /**
-   * Creates an instance of WindowFrame.
-   * @param {any} [options={}] Accepts options for width, height, content,
-   * id, title, and resize.
-   *
-   * @memberOf WindowFrame
-   */
+class BaseWindow {
   constructor(options = {}) {
     this.width = options.width;
     this.height = options.height;
@@ -29,6 +17,127 @@ class WindowFrame {
     WindowInstances.push(this);
   }
 
+  /**
+   * Unfocuses the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
+  unfocus() {
+    this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
+  }
+
+  /**
+   * Focuses the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
+  focus() {
+    WindowInstances.forEach((frame) => {
+      frame.unfocus();
+    });
+    this.dom.style.zIndex = '1000';
+  }
+
+  /**
+   * Shows the `WindowFrame`.
+   *
+   *
+   * @memberOf WindowFrame
+   */
+  show() {
+    const frame = this.makeFrame();
+
+    frame.addEventListener('mousedown', () => {
+      this.focus();
+    });
+
+    if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0) {
+      frame.style.resize = 'both';
+    } else if (this.resize == 'h') {
+      frame.style.resize = 'horizontal';
+    } else if (this.resize == 'v') {
+      frame.style.resize = 'vertical';
+    }
+
+    frame.style.top = '50%';
+    frame.style.left = '50%';
+    frame.style.transform = 'translate(-50%, -50%)';
+
+    this.dom = frame;
+    document.body.appendChild(frame);
+    dragWindowFrame(frame);
+    this.focus();
+  }
+
+  /**
+   * Exits the `WindowFrame` process.
+   *
+   * @param {any} event The event invoking the exit function
+   *
+   * @memberOf WindowFrame
+   */
+  exit(event) {
+    this.resizeTo(0, 0);
+    setTimeout(() => {
+      this.dom.remove();
+      WindowInstances.splice(WindowInstances.indexOf(this), 1);
+    }, 500);
+  }
+
+  /**
+   * Maximizes the `WindowFrame`.
+   *
+   * @param {any} event The event invoking the maximize function
+   *
+   * @memberOf WindowFrame
+   */
+  maximize(event) {
+    this.height = innerHeight;
+    this.width = innerWidth;
+    this.resizeTo(this.width, this.height);
+    this.dom.style.top = '0';
+    this.dom.style.left = '0';
+    this.dom.style.transform = 'none';
+  }
+
+  minimize(event) {
+    const width = this.dom.clientWidth;
+    const height = this.dom.clientHeight;
+    this.resizeTo(0, 0);
+    this.isMinimized = true;
+    this.width = width;
+    this.height = height;
+  }
+
+  unminimize(event) {
+    this.resizeTo(this.width, this.height);
+    this.focus();
+  }
+
+  /**
+   * Resizes the WindowFrame to a specific size.
+   *
+   * @param {any} width The window width
+   * @param {any} height The window height
+   *
+   * @memberOf WindowFrame
+   */
+  resizeTo(width, height) {
+    this.width = width;
+    this.height = height;
+    this.dom.style.width = `${width}px`;
+    this.dom.style.height = `${height}px`;
+  }
+}
+
+/**
+ * The WindowFrame class is responsible for displaying windows
+ *
+ * @class WindowFrame
+ */
+class WindowFrame extends BaseWindow {
   /**
    * Makes the three window control buttons for the `WindowFrame`
    *
@@ -109,120 +218,6 @@ class WindowFrame {
     if (this.content) frame.appendChild(this.content);
     return frame;
   }
-
-  /**
-   * Shows the `WindowFrame`.
-   *
-   *
-   * @memberOf WindowFrame
-   */
-  show() {
-    const frame = this.makeFrame();
-
-    frame.addEventListener('mousedown', () => {
-      this.focus();
-    });
-
-    if (this.resize.indexOf('h') >= 0 && this.resize.indexOf('v') >= 0) {
-      frame.style.resize = 'both';
-    } else if (this.resize == 'h') {
-      frame.style.resize = 'horizontal';
-    } else if (this.resize == 'v') {
-      frame.style.resize = 'vertical';
-    }
-
-    frame.style.top = '50%';
-    frame.style.left = '50%';
-    frame.style.transform = 'translate(-50%, -50%)';
-
-    this.dom = frame;
-    document.body.appendChild(frame);
-    dragWindowFrame(frame);
-    this.focus();
-  }
-
-  /**
-   * Unfocuses the `WindowFrame`.
-   *
-   *
-   * @memberOf WindowFrame
-   */
-  unfocus() {
-    this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
-  }
-
-  /**
-   * Focuses the `WindowFrame`.
-   *
-   *
-   * @memberOf WindowFrame
-   */
-  focus() {
-    WindowInstances.forEach((frame) => {
-      frame.unfocus();
-    });
-    this.dom.style.zIndex = '1000';
-  }
-
-  /**
-   * Exits the `WindowFrame` process.
-   *
-   * @param {any} event The event invoking the exit function
-   *
-   * @memberOf WindowFrame
-   */
-  exit(event) {
-    this.resizeTo(0, 0);
-    setTimeout(() => {
-      this.dom.remove();
-      WindowInstances.splice(WindowInstances.indexOf(this), 1);
-    }, 500);
-  }
-
-  /**
-   * Maximizes the `WindowFrame`.
-   *
-   * @param {any} event The event invoking the maximize function
-   *
-   * @memberOf WindowFrame
-   */
-  maximize(event) {
-    this.height = innerHeight;
-    this.width = innerWidth;
-    this.resizeTo(this.width, this.height);
-    this.dom.style.top = '0';
-    this.dom.style.left = '0';
-    this.dom.style.transform = 'none';
-  }
-
-  minimize(event) {
-    const width = this.dom.clientWidth;
-    const height = this.dom.clientHeight;
-    this.resizeTo(0, 0);
-    this.isMinimized = true;
-    this.width = width;
-    this.height = height;
-  }
-
-  unminimize(event) {
-    this.resizeTo(this.width, this.height);
-    this.focus();
-  }
-
-  /**
-   * Resizes the WindowFrame to a specific size.
-   *
-   * @param {any} width The window width
-   * @param {any} height The window height
-   *
-   * @memberOf WindowFrame
-   */
-  resizeTo(width, height) {
-    this.width = width;
-    this.height = height;
-    this.dom.style.width = `${width}px`;
-    this.dom.style.height = `${height}px`;
-  }
 }
 
 /**
@@ -230,25 +225,7 @@ class WindowFrame {
  *
  * @class WindowPopup
  */
-class WindowPopup {
-  /**
-   * Creates an instance of WindowPopup.
-   * @param {any} [options={}] Takes width, height, content, id,
-   * and resize as options.
-   *
-   * @memberOf WindowPopup
-   */
-  constructor(options = {}) {
-    this.width = options.width;
-    this.height = options.height;
-    this.content = options.content || null;
-    this.id = options.id || Math.floor(Math.random() * 1000000);
-    this.resize = options.resize ? options.resize.toLowerCase() : 'hv';
-    this.dom = null;
-    this.windowContainer = null;
-    WindowInstances.push(this);
-  }
-
+class WindowPopup extends BaseWindow {
   /**
    * Makes the handlebar (which spans the entire window)
    *
@@ -318,72 +295,6 @@ class WindowPopup {
     document.body.appendChild(frame);
     dragWindowFrame(frame);
     this.focus();
-  }
-
-  /**
-   * Unfocuses the popup window.
-   *
-   *
-   * @memberOf WindowPopup
-   */
-  unfocus() {
-    this.dom.style.zIndex = `${+this.dom.style.zIndex - 1}`;
-  }
-
-  /**
-   * Focuses the popup window.
-   *
-   *
-   * @memberOf WindowPopup
-   */
-  focus() {
-    WindowInstances.forEach((frame) => {
-      frame.unfocus();
-    });
-    this.dom.style.zIndex = '1000';
-  }
-
-  /**
-   * Exits the popup window.
-   *
-   * @param {any} event The event causing the exit
-   *
-   * @memberOf WindowPopup
-   */
-  exit(event) {
-    this.dom.remove();
-    WindowInstances.splice(WindowInstances.indexOf(this), 1);
-  }
-
-  /**
-   * Maximizes the popup window.
-   *
-   * @param {any} event The event causing the maximize
-   *
-   * @memberOf WindowPopup
-   */
-  maximize(event) {
-    this.height = innerHeight;
-    this.width = innerWidth;
-    this.dom.style.width = `${this.width}px`;
-    this.dom.style.height = `${this.height}px`;
-    this.dom.style.top = '0';
-    this.dom.style.left = '0';
-  }
-
-  /**
-   * Resizes the popup window to a specific size.
-   *
-   * @param {any} width The window width
-   * @param {any} height The window height
-   *
-   * @memberOf WindowPopup
-   */
-  resizeTo(width, height) {
-    this.width = width;
-    this.height = height;
-    this.dom.style.width = `${width}px`;
-    this.dom.style.height = `${height}px`;
   }
 }
 
