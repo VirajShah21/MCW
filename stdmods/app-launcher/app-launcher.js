@@ -48,7 +48,8 @@ class AppLauncher extends WindowPopup {
       children.push(
         ContentBlock({
           styles: {
-            padding: '12.5px',
+            paddingLeft: '12.5px',
+            paddingRight: '12.5px',
           },
           children: [
             ClickButton({
