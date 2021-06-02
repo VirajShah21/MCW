@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /** An array of windows */
 const WindowInstances = [];
 
@@ -23,6 +25,7 @@ class WindowFrame {
     this.resize = options.resize ? options.resize.toLowerCase() : 'hv';
     this.dom = null;
     this.windowContainer = null;
+    this.isMinimized = false;
     WindowInstances.push(this);
   }
 
@@ -56,6 +59,9 @@ class WindowFrame {
     });
     maxBtn.addEventListener('click', (ev) => {
       this.maximize(ev);
+    });
+    minBtn.addEventListener('click', (ev) => {
+      this.minimize();
     });
 
     wrapper.appendChild(exitBtn);
@@ -125,6 +131,10 @@ class WindowFrame {
       frame.style.resize = 'vertical';
     }
 
+    frame.style.top = '50%';
+    frame.style.left = '50%';
+    frame.style.transform = 'translate(-50%, -50%)';
+
     this.dom = frame;
     document.body.appendChild(frame);
     dragWindowFrame(frame);
@@ -162,8 +172,11 @@ class WindowFrame {
    * @memberOf WindowFrame
    */
   exit(event) {
-    this.dom.remove();
-    WindowInstances.splice(WindowInstances.indexOf(this), 1);
+    this.resizeTo(0, 0);
+    setTimeout(() => {
+      this.dom.remove();
+      WindowInstances.splice(WindowInstances.indexOf(this), 1);
+    }, 500);
   }
 
   /**
@@ -179,6 +192,21 @@ class WindowFrame {
     this.resizeTo(this.width, this.height);
     this.dom.style.top = '0';
     this.dom.style.left = '0';
+    this.dom.style.transform = 'none';
+  }
+
+  minimize(event) {
+    const width = this.dom.clientWidth;
+    const height = this.dom.clientHeight;
+    this.resizeTo(0, 0);
+    this.isMinimized = true;
+    this.width = width;
+    this.height = height;
+  }
+
+  unminimize(event) {
+    this.resizeTo(this.width, this.height);
+    this.focus();
   }
 
   /**
@@ -281,7 +309,12 @@ class WindowPopup {
       frame.style.resize = 'vertical';
     }
 
+    frame.style.top = '50%';
+    frame.style.left = '50%';
+    frame.style.transform = 'translate(-50%, -50%)';
+
     this.dom = frame;
+
     document.body.appendChild(frame);
     dragWindowFrame(frame);
     this.focus();
@@ -415,3 +448,213 @@ function dragWindowFrame(elmnt) {
     document.onmousemove = null;
   }
 }
+
+class PromptWindow extends WindowFrame {
+  constructor(title, message, callback) {
+    super({
+      title: title || 'Prompt',
+    });
+    this.message = message;
+    this.callback = callback;
+  }
+
+  show() {
+    super.show();
+    this.windowContainer.style.background = 'rgba(255, 255, 255, 0.8)';
+    this.windowContainer.appendChild(
+      ContentBlock({
+        children: [
+          TextLabel({
+            text: this.message,
+            styles: {
+              display: 'block',
+              padding: '10px',
+            },
+          }),
+          TextInput({
+            classes: ['prompt-input'],
+            styles: {
+              display: 'block',
+              width: '300px',
+              marginBottom: '25px',
+            },
+          }),
+          ContentBlock({
+            children: [
+              ClickButton({
+                text: 'Cancel',
+                events: {
+                  click: (ev) => {
+                    this.callback(null);
+                    this.exit(ev);
+                  },
+                },
+              }),
+              ClickButton({
+                text: 'Ok',
+                events: {
+                  click: (ev) => {
+                    this.callback(
+                      this.windowContainer.querySelector('.prompt-input')
+                        .value || ''
+                    );
+                    this.exit(ev);
+                  },
+                },
+              }),
+            ],
+            styles: {
+              textAlign: 'right',
+            },
+          }),
+        ],
+        styles: {
+          padding: '20px',
+        },
+      })
+    );
+  }
+}
+
+class ConfirmWindow extends WindowFrame {
+  constructor(title, message, callback) {
+    super({
+      title: title || 'Prompt',
+    });
+    this.message = message;
+    this.callback = callback;
+  }
+
+  show() {
+    super.show();
+    this.windowContainer.style.background = 'rgba(255, 255, 255, 0.8)';
+    this.windowContainer.appendChild(
+      ContentBlock({
+        children: [
+          TextLabel({
+            text: this.message,
+            styles: {
+              display: 'block',
+              padding: '10px',
+              marginBottom: '25px',
+            },
+          }),
+          ContentBlock({
+            children: [
+              ClickButton({
+                text: 'Cancel',
+                events: {
+                  click: (ev) => {
+                    this.callback(false);
+                    this.exit(ev);
+                  },
+                },
+              }),
+              ClickButton({
+                text: 'Ok',
+                events: {
+                  click: (ev) => {
+                    this.callback(true);
+                    this.exit(ev);
+                  },
+                },
+              }),
+            ],
+            styles: {
+              textAlign: 'right',
+            },
+          }),
+        ],
+        styles: {
+          padding: '20px',
+        },
+      })
+    );
+  }
+}
+
+class AlertWindow extends WindowFrame {
+  constructor(title, message, callback) {
+    super({
+      title: title || 'Alert',
+    });
+    this.message = message;
+    this.callback = callback;
+  }
+
+  show() {
+    super.show();
+    this.windowContainer.style.background = 'rgba(255, 255, 255, 0.8)';
+    this.windowContainer.appendChild(
+      ContentBlock({
+        children: [
+          TextLabel({
+            text: this.message,
+            styles: {
+              display: 'block',
+              padding: '10px',
+              marginBottom: '25px',
+            },
+          }),
+          ContentBlock({
+            children: [
+              ClickButton({
+                text: 'Cancel',
+                events: {
+                  click: (ev) => {
+                    this.callback();
+                    this.exit(ev);
+                  },
+                },
+              }),
+              ClickButton({
+                text: 'Ok',
+                events: {
+                  click: (ev) => {
+                    this.callback();
+                    this.exit(ev);
+                  },
+                },
+              }),
+            ],
+            styles: {
+              textAlign: 'right',
+            },
+          }),
+        ],
+        styles: {
+          padding: '20px',
+          minWidth: '300px',
+        },
+      })
+    );
+  }
+}
+
+const browserPrompt = prompt;
+prompt = async function (message, title = 'Prompt') {
+  return new Promise((resolve, reject) => {
+    new PromptWindow(title, message, (value) => {
+      if (value) resolve(value);
+      else reject();
+    }).show();
+  });
+};
+
+const browserAlert = alert;
+alert = async function (message, title = 'Alert') {
+  return new Promise((resolve) => {
+    new AlertWindow(title, message, () => {
+      resolve();
+    }).show();
+  });
+};
+
+const browserConfirm = confirm;
+confirm = async function (message, title = 'Confirm') {
+  return new Promise((resolve) => {
+    new ConfirmWindow(title, message, (response) => {
+      resolve(response);
+    }).show();
+  });
+};

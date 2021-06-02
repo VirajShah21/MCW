@@ -42,7 +42,7 @@ class AppLauncher extends WindowPopup {
    *
    * @memberOf AppLauncher
    */
-  redraw() {
+  redrawAppList() {
     const children = [];
     for (const appName in AppRegistrar) {
       children.push(
@@ -87,6 +87,50 @@ class AppLauncher extends WindowPopup {
     );
   }
 
+  redrawMinimizedApps() {
+    const children = [];
+    WindowInstances.filter((frame) => frame.isMinimized).forEach((frame) => {
+      children.push(
+        ClickButton({
+          styles: {
+            width: `${this.width / 3 - 12.5}px`,
+            float: 'left',
+            marginLeft: '12.5px',
+          },
+          children: [
+            SquareIcon({
+              src: frame.icon || '/app-launcher/gear.png',
+              size: 12,
+              styles: {
+                marginRight: '5px',
+              },
+            }),
+            TextLabel({
+              text: (() => {
+                let text = frame.title;
+                if (text.length > 15) text = `${text.substring(0, 12)}...`;
+                return text;
+              })(),
+              styles: {
+                fontSize: '12px',
+              },
+            }),
+          ],
+          events: {
+            click: (ev) => {
+              frame.unminimize(ev);
+            },
+          },
+        })
+      );
+    });
+    const target = this.windowContainer.querySelector('.minimized-apps');
+    target.innerHTML = '';
+    children.forEach((child) => {
+      target.appendChild(child);
+    });
+  }
+
   show() {
     super.show();
     this.windowContainer.innerHTML = '';
@@ -105,7 +149,7 @@ class AppLauncher extends WindowPopup {
                 } else {
                   this.resizeTo(500, 500);
                   this.sideLength = 500;
-                  this.redraw();
+                  this.redrawAppList();
                 }
               },
             },
@@ -125,7 +169,9 @@ class AppLauncher extends WindowPopup {
             ],
             events: {
               click: (ev) => {
-                document.write('<style>html{background:black}</style>');
+                confirm('Are you sure you want to shutdown?').then(() => {
+                  document.write('<style>html{background:black}</style>');
+                });
               },
             },
             styles: {
@@ -162,6 +208,14 @@ class AppLauncher extends WindowPopup {
             styles: {
               background: 'rgba(255, 255, 255, 0.25)',
               height: '1px',
+              width: '100%',
+            },
+          }),
+          ContentBlock({ classes: ['minimized-apps'] }),
+          HorizontalDivider({
+            styles: {
+              background: 'none',
+              width: '100%',
             },
           }),
           TextLabel({ text: 'Loading Applications...', classes: ['applist'] }),
@@ -169,7 +223,7 @@ class AppLauncher extends WindowPopup {
       })
     );
     setTimeout(() => {
-      this.redraw();
+      this.redrawAppList();
     }, 500);
   }
 }
@@ -177,3 +231,7 @@ class AppLauncher extends WindowPopup {
 const launcher = new AppLauncher();
 
 launcher.show();
+
+setInterval(() => {
+  launcher.redrawMinimizedApps();
+}, 1000);
